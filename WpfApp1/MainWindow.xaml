@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:WpfApp1"
         mc:Ignorable="d"
-        Title="MainWindow" Height="500" Width="950" Background="#90EE90">
+        Title="MainWindow" Height="350" Width="550" Background="#90EE90">
     <Window.Resources>
         <Style TargetType="Button">
             <Setter Property="FontSize" Value="16"/>
@@ -58,16 +58,16 @@
                 Padding="2"
                 Grid.ColumnSpan="2"
                 Name="datagridOpXaml"
-                AlternatingRowBackground="LightCyan"
+                
+                AlternatingRowBackground="LightCyan"   
+                CanUserAddRows="False"
+                CanUserDeleteRows="False">
                
-
-            />
-            <WrapPanel
-                Grid.Row="2"
-                Grid.ColumnSpan="2">
-
+            </DataGrid>
+            
 
                 <Button
+                   Grid.Row="1" 
                 Name="btnLeesBestand_csv"
                 Content="lees csv bestand"
              Click="btnLeesBestand_csv_Click"
@@ -75,24 +75,17 @@
                 />
                 
                 <Button
+                    Grid.Row="1"
+                    Grid.Column="1"
                 Name="btnDatagridOpslaan_csv"
                 Content="save datagrid als csv"
                     Click="btnDatagridOpslaan_csv_Click"
          
                 
                 />
-                
-                <Button
-                Name="btnReset"
-                Content="reset"
-                    Click="btnReset_Click"
-         
-                
-                />
 
 
 
-            </WrapPanel>
 
 
 

@@ -19,9 +19,8 @@ using System.Data;  // <-- deze moet je toevoegen om gebruik te kunnen maken van
 using Microsoft.VisualBasic; //<-- om gebruik te maken van  Interaction.InputBox
 
 using System.Windows.Threading; // 
-
-
-
+using System.Windows.Forms; // DataGridViewColumnCollection
+using MessageBox = System.Windows.MessageBox;
 
 namespace WpfApp1
 {
@@ -36,14 +35,89 @@ namespace WpfApp1
         }
 
         DataTable dt = new DataTable();
+        List<string> alleRijen = new List<string>();
 
-        private void StartWaarde()
-        {
-            
-        }
 
         private void btnDatagridOpslaan_csv_Click(object sender, RoutedEventArgs e)
         {
+            string pad = "OUTKommaBestand.txt";    // je kan als extestie .txt of .csv megeven 
+            FileInfo fi = new FileInfo(pad);
+            if (!fi.Exists)
+            {
+
+                using (StreamWriter sw = new StreamWriter(pad))
+                {
+                    // Gegevens wegschrijven
+
+                    string inhoudCsv = "";
+                    var headers = dt.Columns;
+                    
+                    for (int i = 0; i < headers.Count; i++)
+                    {
+                        var header = headers[i];       //var col = dt.Columns[i];  // header
+                        inhoudCsv += $"{header.ToString()}";
+                        if(i == headers.Count - 1)
+                        {
+                            inhoudCsv += $"\n";
+                        }
+                        else
+                        {
+                            inhoudCsv += $";";
+                        }
+                    }
+
+
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        var row = dt.Rows[i];
+                        var indexRow = row.ItemArray;
+                        for(int j = 0; j < indexRow.Length; j++)
+                        {
+                            var item = indexRow[j];
+                            inhoudCsv += $"{item.ToString()}"; // row 
+                            if (j == indexRow.Length - 1)
+                            {
+                                inhoudCsv += $"\n"; // row 
+                            }
+                            else
+                            {
+                                inhoudCsv += $";"; // row 
+                            }
+                        }
+                        
+
+                    }
+ 
+
+
+                    sw.WriteLine(inhoudCsv);
+
+
+
+                }
+                MessageBox.Show("klaar");
+            }
+            else
+            {
+                fi.Delete();
+            }
+
+
+
+
+
+
+
+
+
+
+
+           
+
+
+ 
+
+
 
         }
 
@@ -78,7 +152,7 @@ namespace WpfApp1
                 dt.Columns.Add(headers[i], typeof(string));
             }
 
-            //** data inlezen    *rijen staat op L26 
+            //** data inlezen  
             rijen.Skip(1).ToList().ForEach(rij =>
             {
 
@@ -88,11 +162,11 @@ namespace WpfApp1
                     data = rij.Split(';');
                     if (string.IsNullOrEmpty(data[i]))         /// rij inhoud controlleren op null waarden 
                     {
-                        data[i] = null;
+                        data[i] = null;   
                     }
-                    if (!string.IsNullOrEmpty(data[i]))
+                    if (!string.IsNullOrEmpty(data[i])) 
                     {
-                        data[i] = data[i].Trim();
+                        data[i] = data[i].Trim();   // Trim : geen White Space
 
                     }
 
@@ -105,12 +179,5 @@ namespace WpfApp1
 
         }
 
-
-
-
-        private void btnReset_Click(object sender, RoutedEventArgs e)
-        {
-
-        }
     }
 }
