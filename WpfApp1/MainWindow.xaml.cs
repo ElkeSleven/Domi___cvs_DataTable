@@ -16,17 +16,21 @@ using System.Windows.Shapes;
 
 using System.IO;   //<-- deze moet je toevoegen om gebruik te kunnen maken van StreamReader en StreamWritter
 using System.Data;  // <-- deze moet je toevoegen om gebruik te kunnen maken van DataTable , DataView , ...
-using Microsoft.VisualBasic; //<-- om gebruik te maken van  Interaction.InputBox
 
-using System.Windows.Threading; // 
-using System.Windows.Forms; // DataGridViewColumnCollection
-using MessageBox = System.Windows.MessageBox;
+/*  // Domi
+ *  1. laat een csv bestand in   (ik heb er een voorzien in de debug file)
+ *  2. verander data in het datagrind 
+ *  3. sla je datagrind ip als een scv bestand
+ *
+ * 
+   */
+
+
+
 
 namespace WpfApp1
 {
-    /// <summary>
-    /// Interaction logic for MainWindow.xaml
-    /// </summary>
+
     public partial class MainWindow : Window
     {
         public MainWindow()
@@ -38,89 +42,89 @@ namespace WpfApp1
         List<string> alleRijen = new List<string>();
 
 
+        //** Csv bestand schrijven me de info die we uit het datagrind krijgen 
         private void btnDatagridOpslaan_csv_Click(object sender, RoutedEventArgs e)
         {
-            string pad = "OUTKommaBestand.txt";    // je kan als extestie .txt of .csv megeven 
+            string pad = "OUTKommaBestand.csv";    // je kan als extestie .txt of .csv megeven 
             FileInfo fi = new FileInfo(pad);
             if (!fi.Exists)
             {
+                CsvBestandSchrijven(pad);
 
-                using (StreamWriter sw = new StreamWriter(pad))
-                {
-                    // Gegevens wegschrijven
-
-                    string inhoudCsv = "";
-                    var headers = dt.Columns;
-                    
-                    for (int i = 0; i < headers.Count; i++)
-                    {
-                        var header = headers[i];       //var col = dt.Columns[i];  // header
-                        inhoudCsv += $"{header.ToString()}";
-                        if(i == headers.Count - 1)
-                        {
-                            inhoudCsv += $"\n";
-                        }
-                        else
-                        {
-                            inhoudCsv += $";";
-                        }
-                    }
-
-
-                    for (int i = 0; i < dt.Rows.Count; i++)
-                    {
-                        var row = dt.Rows[i];
-                        var indexRow = row.ItemArray;
-                        for(int j = 0; j < indexRow.Length; j++)
-                        {
-                            var item = indexRow[j];
-                            inhoudCsv += $"{item.ToString()}"; // row 
-                            if (j == indexRow.Length - 1)
-                            {
-                                inhoudCsv += $"\n"; // row 
-                            }
-                            else
-                            {
-                                inhoudCsv += $";"; // row 
-                            }
-                        }
-                        
-
-                    }
- 
-
-
-                    sw.WriteLine(inhoudCsv);
-
-
-
-                }
-                MessageBox.Show("klaar");
             }
             else
             {
-                fi.Delete();
+                MessageBoxResult resaltaat = MessageBox.Show("het lijkt erop dat de file al bestaat wil je het vervangen ? ", "vervangen ? ", MessageBoxButton.YesNo, MessageBoxImage.Question);
+                if (MessageBoxResult.Yes == resaltaat)
+                {
+                    fi.Delete();
+                    CsvBestandSchrijven(pad);
+                }
             }
-
-
-
-
-
-
-
-
-
-
-
-           
-
-
- 
-
-
 
         }
 
+
+        //** Csv bestand schrijven me de info die we uit het datagrind krijgen 
+        private void CsvBestandSchrijven(string pad)
+        {
+            using (StreamWriter sw = new StreamWriter(pad))
+            {
+                // Gegevens wegschrijven
+
+                string inhoudCsv = "";
+                var headers = dt.Columns;
+
+                for (int i = 0; i < headers.Count; i++)
+                {
+                    var header = headers[i];       //var col = dt.Columns[i];  // header
+                    inhoudCsv += $"{header.ToString()}";
+                    if (i == headers.Count - 1)
+                    {
+                        inhoudCsv += $"\n";
+                    }
+                    else
+                    {
+                        inhoudCsv += $";";
+                    }
+                }
+
+
+                for (int i = 0; i < dt.Rows.Count; i++)
+                {
+                    var row = dt.Rows[i];
+                    var indexRow = row.ItemArray;
+                    for (int j = 0; j < indexRow.Length; j++)
+                    {
+                        var item = indexRow[j];
+                        inhoudCsv += $"{item.ToString()}"; // row 
+                        if (j == indexRow.Length - 1)
+                        {
+                            inhoudCsv += $"\n"; // row 
+                        }
+                        else
+                        {
+                            inhoudCsv += $";"; // row 
+                        }
+                    }
+
+
+                }
+
+
+
+                sw.WriteLine(inhoudCsv);
+
+
+
+            }
+            MessageBox.Show("klaar");
+        }
+
+
+
+        ///*** er zit een in de debug file 
+        //**datagrid vullen met de info wat we krijgen van het csv bestand 
         private void btnLeesBestand_csv_Click(object sender, RoutedEventArgs e)
         {
             string pad = "KommaBestand.csv";
@@ -135,7 +139,6 @@ namespace WpfApp1
             }
 
         }
-
 
         //**datagrid vullen met de info wat we krijgen van het csv bestand 
         private void CsvBestandInlezen(string pad)
@@ -180,4 +183,19 @@ namespace WpfApp1
         }
 
     }
+
+
+    /*
+     * //using Microsoft.VisualBasic; //<-- om gebruik te maken van  Interaction.InputBox
+     * //using System.Windows.Threading; // 
+     * //using System.Windows.Forms; // DataGridViewColumnCollection
+     * //using MessageBox = System.Windows.MessageBox;
+     
+     
+     
+     */
+
+
+
+
 }
