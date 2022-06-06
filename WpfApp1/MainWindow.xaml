@@ -58,6 +58,7 @@
                 Padding="2"
                 Grid.ColumnSpan="2"
                 Name="datagridOpXaml"
+                AlternatingRowBackground="LightCyan"
                
 
             />

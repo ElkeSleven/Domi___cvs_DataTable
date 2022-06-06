@@ -16,7 +16,9 @@ using System.Windows.Shapes;
 
 using System.IO;   //<-- deze moet je toevoegen om gebruik te kunnen maken van StreamReader en StreamWritter
 using System.Data;  // <-- deze moet je toevoegen om gebruik te kunnen maken van DataTable , DataView , ...
-using Microsoft.VisualBasic; //<-- om gebruik te maken van 
+using Microsoft.VisualBasic; //<-- om gebruik te maken van  Interaction.InputBox
+
+using System.Windows.Threading; // 
 
 
 
@@ -47,58 +49,60 @@ namespace WpfApp1
 
         private void btnLeesBestand_csv_Click(object sender, RoutedEventArgs e)
         {
-            MessageBoxResult resaltaat = MessageBox.Show("het lijkt erop dat de file al bestaat wil je het vervangen ? ", "vervangen ? ", MessageBoxButton.YesNo, MessageBoxImage.Question);
-            if (MessageBoxResult.Yes == resaltaat)
-            {
-                int aantalColumns_int;
-                string aantalColumns_string;
-                aantalColumns_string = Interaction.InputBox("wat is je naam ? ", "heyy daar");
-               
-                if (!string.IsNullOrEmpty(aantalColumns_string)
-                { 
-                    
-                   
-                    
-                }
-            }
-
-
-
-
-        }
-
-
-        private void CsvBestandInlezen()
-        {
             string pad = "KommaBestand.csv";
             FileInfo fi = new FileInfo(pad);
             if (fi.Exists) // enkel bestand lezen als het bestaat
             {
-                using (StreamReader sr = new StreamReader(pad))
-                {
-
-                    while (!sr.EndOfStream)
-                    {
-                        // Splits ingelezen regel op volgens ;
-                        string[] items = sr.ReadLine().Split(';');
-                        foreach (string item in items)
-                        {
-
-
-                        }
-
-
-                    }
-                    MessageBox.Show("klaar");
-                }
-
-
-
+                CsvBestandInlezen(pad);
             }
             else
             {
                 MessageBox.Show("file niet gevonden");
             }
+
+        }
+
+
+        //**datagrid vullen met de info wat we krijgen van het csv bestand 
+        private void CsvBestandInlezen(string pad)
+        {
+            
+            // Splits ingelezen regel op volgens ;
+            dt = new DataTable();
+            string[] rijen = File.ReadAllLines(pad);
+            string[] headers = rijen[0].Split(';');
+
+            //** pakt de eerte rij van de file en gebruit deze waarden als headers 
+            for (int i = 0; i < headers.Length; i++)
+            {
+                dt.Columns.Add(headers[i], typeof(string));
+            }
+
+            //** data inlezen    *rijen staat op L26 
+            rijen.Skip(1).ToList().ForEach(rij =>
+            {
+
+                string[] data = rij.Split(';'); ;
+                for (int i = 0; i < data.Length; i++)
+                {
+                    data = rij.Split(';');
+                    if (string.IsNullOrEmpty(data[i]))         /// rij inhoud controlleren op null waarden 
+                    {
+                        data[i] = null;
+                    }
+                    if (!string.IsNullOrEmpty(data[i]))
+                    {
+                        data[i] = data[i].Trim();
+
+                    }
+
+                }
+                dt.Rows.Add(data);
+
+            });
+
+            datagridOpXaml.ItemsSource = dt.AsDataView();
+
         }
 
 
