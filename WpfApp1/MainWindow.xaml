@@ -69,13 +69,14 @@
                 <Button
                 Name="btnLeesBestand_csv"
                 Content="lees csv bestand"
-             
+             Click="btnLeesBestand_csv_Click"
                
                 />
                 
                 <Button
                 Name="btnDatagridOpslaan_csv"
-                Content="bestand als csv opslaan"
+                Content="save datagrid als csv"
+                    Click="btnDatagridOpslaan_csv_Click"
          
                 
                 />
@@ -83,6 +84,7 @@
                 <Button
                 Name="btnReset"
                 Content="reset"
+                    Click="btnReset_Click"
          
                 
                 />

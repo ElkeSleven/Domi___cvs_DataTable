@@ -57,7 +57,7 @@ namespace WpfApp1 {
         #line hidden
         
         
-        #line 71 "..\..\MainWindow.xaml"
+        #line 70 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button btnLeesBestand_csv;
         
@@ -65,7 +65,7 @@ namespace WpfApp1 {
         #line hidden
         
         
-        #line 78 "..\..\MainWindow.xaml"
+        #line 77 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button btnDatagridOpslaan_csv;
         
@@ -73,7 +73,7 @@ namespace WpfApp1 {
         #line hidden
         
         
-        #line 86 "..\..\MainWindow.xaml"
+        #line 85 "..\..\MainWindow.xaml"
         [System.Diagnostics.CodeAnalysis.SuppressMessageAttribute("Microsoft.Performance", "CA1823:AvoidUnusedPrivateFields")]
         internal System.Windows.Controls.Button btnReset;
         
@@ -119,7 +119,7 @@ namespace WpfApp1 {
             case 3:
             this.btnLeesBestand_csv = ((System.Windows.Controls.Button)(target));
             
-            #line 73 "..\..\MainWindow.xaml"
+            #line 72 "..\..\MainWindow.xaml"
             this.btnLeesBestand_csv.Click += new System.Windows.RoutedEventHandler(this.btnLeesBestand_csv_Click);
             
             #line default
@@ -128,7 +128,7 @@ namespace WpfApp1 {
             case 4:
             this.btnDatagridOpslaan_csv = ((System.Windows.Controls.Button)(target));
             
-            #line 80 "..\..\MainWindow.xaml"
+            #line 79 "..\..\MainWindow.xaml"
             this.btnDatagridOpslaan_csv.Click += new System.Windows.RoutedEventHandler(this.btnDatagridOpslaan_csv_Click);
             
             #line default
@@ -137,7 +137,7 @@ namespace WpfApp1 {
             case 5:
             this.btnReset = ((System.Windows.Controls.Button)(target));
             
-            #line 88 "..\..\MainWindow.xaml"
+            #line 87 "..\..\MainWindow.xaml"
             this.btnReset.Click += new System.Windows.RoutedEventHandler(this.btnReset_Click);
             
             #line default
